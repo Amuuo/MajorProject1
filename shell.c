@@ -26,7 +26,6 @@ void startShell()
 	{	
 		printf("\n\nEnter 'c' to continue: ");
 		scanf("%c%*c", &response);
-
 	} while(response != 'c');
 	cls();
 }
