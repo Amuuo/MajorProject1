@@ -120,7 +120,7 @@ int main(int argc, char **argv)
 						temp++;
 						argument = strtok_r(command, " ", &endArg);
 					}
-				/*if(pid == 0)
+				if(pid == 0)
 				{
 					for(i = 0; i < counter; i++)
 					{
@@ -155,7 +155,7 @@ int main(int argc, char **argv)
 				{
 					perror("Fork");
 					exit(1);
-				}*/
+				}
 				command = strtok_r(input, ";", &endCmnd);
 			}
 		}
