@@ -60,28 +60,39 @@ int main(int argc, char **argv)
 			length = strlen(input);	
 			printf("\ninput = %s", input); 
 			printf("\nlength = %d", length);
-			printf("\nprinting elements of 'input': ");
-			for(; i < length; ++i)
+			printf("\n\nprinting elements of 'input': ");
+			for(i = 0; i < length; ++i)
 			{
 				printf("\ninput[%d] = %c", i, input[i]);	
 			}
-			if(input[length-2] != ';')
+			if(strncmp(input, ";", length-2)) 
+			//if(input[length-2] != ';')
 			{				
 				counter++;
 				printf("\ninput[length-2] = %c", input[length-2]);
 				printf("\ncounter = %d", counter);
 			}
-			printf("\njust before for loop");
-			for(i = 0; i < length - 2; ++i)
+			printf("\n\nprinting elements of 'input': ");
+			for(i = 0; i < length; ++i)
 			{
+				printf("\ninput[%d] = %c", i, input[i]);	
+			}
+			printf("\njust before for loop");
+			printf("\nlength = %d", length);
+			for(i = 0; i < length - 1; ++i)
+			{
+				printf("\ni = %d", i);
 				if(input[i] == ';')
 				{
 					printf("\ncounter = %d", counter);
 					counter++;
 				}
 			}
-			cmds = malloc(counter*sizeof(char*));
-			command = strtok_r(input, ";", &endCmnd);
+			cmds = malloc(counter*sizeof(*cmds));
+			printf("\ncounter * sizeof(*cmds) = %d", counter * sizeof(*cmds));
+			//SEGMENTATION FAULT HAPPENS HERE
+			//command = strtok_r(input, ";", &endCmnd);
+			printf("\nmade it here");
 			while(command != NULL)
 			{
 				pid = fork();
@@ -107,7 +118,7 @@ int main(int argc, char **argv)
 						args[temp] = malloc((strlen(argument) + 1)*sizeof(char));
 						strcpy(args[temp], argument);
 						temp++;
-						argument = strtok_r(NULL, " ", &endArg);
+						argument = strtok_r(command, " ", &endArg);
 					}
 				/*if(pid == 0)
 				{
@@ -145,7 +156,7 @@ int main(int argc, char **argv)
 					perror("Fork");
 					exit(1);
 				}*/
-				command = strtok_r(NULL, ";", &endCmnd);
+				command = strtok_r(input, ";", &endCmnd);
 			}
 		}
 	}
