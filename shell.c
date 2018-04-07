@@ -26,6 +26,7 @@ void startShell()
 	{	
 		printf("\n\nEnter 'c' to continue: ");
 		scanf("%c%*c", &response);
+
 	} while(response != 'c');
 	cls();
 }
@@ -49,18 +50,33 @@ int main(int argc, char **argv)
 	{
 		while(1)
 		{
-			i = 0;
-			x = 0;
-			temp = 0;
+			i       = 0;
+			x       = 0;
+			temp    = 0;
 			counter = 0;
 			printf("> ");
 			fgets(input, 512, stdin);
-			if(input[strlen(input) - 2] != ';')
-				counter++;
-			for(x = 0; x < strlen(input); x++)
+			int length;
+			length = strlen(input);	
+			printf("\ninput = %s", input); 
+			printf("\nlength = %d", length);
+			printf("\nprinting elements of 'input': ");
+			for(; i < length; ++i)
 			{
-				if(input[x] == ';')
+				printf("\ninput[%d] = %c", i, input[i]);	
+			}
+			if(input[length-2] != ';')
+			{				
+				counter++;
+				printf("\ninput[length-2] = %c", input[length-2]);
+				printf("\ncounter = %d", counter);
+			}
+			printf("\njust before for loop");
+			for(i = 0; i < length - 2; ++i)
+			{
+				if(input[i] == ';')
 				{
+					printf("\ncounter = %d", counter);
 					counter++;
 				}
 			}
@@ -70,7 +86,7 @@ int main(int argc, char **argv)
 			{
 				pid = fork();
 				char *endArg;
-				cmds[i] = malloc(strlen(command)*sizeof(char));
+				cmds[i] = malloc((strlen(command)+1)*sizeof(char));
 				strcpy(cmds[i], command);
 				i++;
 				arg = 1;
@@ -88,7 +104,7 @@ int main(int argc, char **argv)
 					argument = strtok_r(command, " ", &endArg);
 					while(argument != NULL)
 					{
-						args[temp] = malloc(strlen(argument)*sizeof(char));
+						args[temp] = malloc((strlen(argument) + 1)*sizeof(char));
 						strcpy(args[temp], argument);
 						temp++;
 						argument = strtok_r(NULL, " ", &endArg);
