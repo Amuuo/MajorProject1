@@ -6,6 +6,31 @@
 #include <sys/types.h>
 #include<sys/wait.h>
 
+//clears the screen
+void cls() 
+{
+	printf("\033[H\033[J");
+}
+
+void startShell()
+{
+	char response;
+	cls();
+	printf("\n\n===========================================");
+	printf("\n\n            ----WELCOME----");
+	printf("\n\n===========================================");
+	char* user = getenv("USER");
+	printf("\n\nusername: %s", user);
+	//sleep(2);
+	do
+	{	
+		printf("\n\nEnter 'c' to continue: ");
+		scanf("%c%*c", &response);
+
+	} while(response != 'c');
+	cls();
+}
+
 int main(int argc, char **argv)
 {
 	pid_t pid;
@@ -18,22 +43,21 @@ int main(int argc, char **argv)
 	char *command, **cmds, *argument, **args;
 	char *endCmnd;
 	
+
+	startShell();	
+
 	if(argc == 1)
 	{
 		while(1)
 		{
-			i       = 0;
-			x       = 0;
-			temp    = 0;
+			i = 0;
+			x = 0;
+			temp = 0;
 			counter = 0;
 			printf("> ");
-
-			//retrieve user-entered command
 			fgets(input, 512, stdin);
 			if(input[strlen(input) - 2] != ';')
-			{
 				counter++;
-			}	
 			for(x = 0; x < strlen(input); x++)
 			{
 				if(input[x] == ';')
@@ -56,12 +80,9 @@ int main(int argc, char **argv)
 					if(cmds[i][x] == ' ')
 					{
 						if(x == 0)
-						{
-						}
+						{}
 						else
-						{
 							arg++;
-						}
 					}
 				}
 					args = malloc(arg*sizeof(char*));
